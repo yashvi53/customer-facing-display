@@ -21,6 +21,14 @@
     position:sticky;
    
 }
+.items-no{
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    margin-top: -26px;
+    margin-left: -12px;
+    background-color: #ECECEC;
+}
 .bill-footer .amount-bill p{
     margin-top: 12px;
     color: #606161;
@@ -67,28 +75,90 @@ table tbody td{
 }
 table{
     --bs-table-border-color: #aeb4b9!important;
+
 }
+table th{
+    position: sticky;
+    top: 0;
+    background-color: #ECECEC!important;
+}
+.bill-table{
+    max-height: 350px;
+    overflow-y: scroll;
+}
+
 
 .bill-footer{
     background-color: #ECECEC;
     width: 100%;
-    height: 158px;
+}
 
-}
-/* .bill-table-body{
-    max-width: 100%;
-    display: block;
-    max-height: calc(100vh - 300px);
-    overflow-y: scroll;
-} */
-/* tr{
-    display: table;
-} */
-.round-off{
-    margin-left: 36%;
-}
 .footer-dotted-line{
     border: none;
     border-bottom: 2px dashed black;
-    /* padding: 12px 12px; */
+    
+}
+.add-products{
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add-products input{
+    max-width: 100%;
+    padding: 5px 1px;
+    border: 2px solid #D3D3D3;
+    border-radius: 4px;
+    -webkit-transition: 1s; 
+  transition: 1s;
+
+  
+}
+.add-products input::placeholder{
+    font-size: 15px;
+    font-weight: 500;
+}
+.add-products input[type=text]:hover{
+    box-shadow: 0 0 5pt 0.5pt #D3D3D3;
+}
+.add-products input[type=text]:focus {
+    box-shadow: 0 0 5pt 2pt #D3D3D3;
+    outline-width: 0px;
+  }
+.add-products button{
+    max-width: 100%;
+    outline: none;
+    border: none;
+    padding: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 2px solid #D3D3D3;
+    border-radius: 6px;
+}
+.add-products button:hover{
+    box-shadow: 0 0 5pt 2pt #D3D3D3;
+}
+.message-container{
+    width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+/* media quieries */
+
+@media only screen and (max-width: 1400px) {
+    .bill-table {
+        max-height: 420px;
+        
+        overflow-y: scroll;
+    } 
+    .bill-footer{
+        bottom: 24px;
+    }
+}
+@media only screen and(max-width:1000px){
+    .bill-table{
+        max-height: 398px;
+    }
 }

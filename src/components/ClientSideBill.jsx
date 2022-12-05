@@ -3,19 +3,19 @@ import "./PosBill.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import io from "socket.io-client";
 import { Table } from "react-bootstrap";
-import axios from "axios";
-import { Typeahead } from 'react-bootstrap-typeahead';
 import Header from "./Header";
 import Footer from "./Footer";
+const socket=io.connect("http://localhost:3002");
 
-function PosBill({ socket, username, room }) {
+function ClientSideBill({ socket, username, room }) {
   const [currentMessage,setCurrentMessage]=useState();
   const [messageList, setMessageList] = useState([]);
   const [messageRecived, setMessageRecived] = useState([]);
-  const [product,setProduct]=useState([]);
-  const [singleSelections, setSingleSelections] = useState([]);
-  
+
+ 
+ 
 
   const sendData = () => {
     const tableData = [
@@ -69,10 +69,10 @@ function PosBill({ socket, username, room }) {
         Total: 500,
         mrp: 500,
       },
-      { srno: 9, items: "Fizz", Price: 30, Qty: 4, Total: 120, mrp: 500 },
-      { srno: 10, items: "Fizz", Price: 30, Qty: 4, Total: 120, mrp: 500 },
-      { srno: 11, items: "Fizz", Price: 30, Qty: 4, Total: 120, mrp: 500 },
-      { srno: 12, items: "Fizz", Price: 30, Qty: 4, Total: 120, mrp: 500 }
+      // { srno: 9, items: "Fizz", Price: 30, Qty: 4, Total: 120, mrp: 500 },
+      // { srno: 10, items: "Fizz", Price: 30, Qty: 4, Total: 120, mrp: 500 },
+      // { srno: 11, items: "Fizz", Price: 30, Qty: 4, Total: 120, mrp: 500 },
+      // { srno: 12, items: "Fizz", Price: 30, Qty: 4, Total: 120, mrp: 500 }
     ];
 
     console.log("currentMessage :: " + currentMessage);
@@ -86,13 +86,12 @@ function PosBill({ socket, username, room }) {
       filteredObj = filterdArray[0];
     }
 
-    
+
 console.log("send_data ",filteredObj);
     socket.emit("send_data", {filteredObj,room });
 
     setMessageRecived((list)=>[...list,filteredObj]);
     console.log("tabledata working");
-
 
   };
 
@@ -115,25 +114,18 @@ messageRecived.forEach(item=>{
 })
 console.log(finaltotal);
 
-const fetchData=async ()=>{
- 
-  return await fetch("https://fakestoreapi.com/products?limit=7")
-          .then(res=>res.json())
-          .then(json=>setProduct(json))       
-}
-
-
-
   useEffect(() => {
     socket.on("receive_message", (data) => {
       console.log(data);
       // setMessageRecived(data.filteredObj);
       setMessageRecived((list)=>[...list,data.filteredObj]);
+     
     });
-    fetchData();
+    
   }, [socket]);
 
-  
+
+ 
   return (
     <Container>
       <Row>
@@ -163,64 +155,26 @@ const fetchData=async ()=>{
                   <td>{item.Total}</td>    
                 </tr>;
                 })}
-
-                
               
-              {product && product.length > 0 && product.map((productObj, index) => (
-          
-             <tr>
-                <td key={productObj.id}>{productObj.id}</td>
-              <td>{productObj.title}</td>
-              <td>{productObj.price}</td>
-              </tr>
-             
-           
-          ))}
-          
    
               </tbody>
               
             </Table>
-           
-            <Footer  itemstotal={itemstotal} totalqty={totalqty} finaltotal={finaltotal}/>
+           <Footer itemstotal={itemstotal} totalqty={totalqty} finaltotal={finaltotal}/>
+
           </div>
         </Col>
         <Col className="bill-right-side">
-        <div className="add-products">
-        <Typeahead
-         id="basic-example"
-         onChange={setSingleSelections}
-         placeholder="Add a products..."
-         selected={singleSelections}
-        />
-            {/* <input
-              type="text"
-              placeholder="Search Products"
-         
-                 required
-                //  onChange={(event) => {
-              //    setCurrentMessage(event.target.value);
-                
-              //   }}  
-              //onChange={(e)=>setQuery(e.target.value)}
-            /> */}
-            <button
-            onClick={() => {
-              sendData();
-              // filterById();
-            }}>Add Products</button>
-          </div>
           <h6>Powered By</h6>
           <div className="logo-img">
             <img src="images/logo-new.png" alt="logo" />
           </div>
+          
          
-        
         </Col>
       </Row>
-      
     </Container>
   );
 }
 
-export default PosBill;
+export default ClientSideBill;

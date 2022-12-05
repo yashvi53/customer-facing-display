@@ -5,10 +5,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 
-function Footer({itemstotal}) {
+function Footer({itemstotal,totalqty,finaltotal}) {
     
-
-
+ 
   return (
     <div className="bill-footer">
               <Container className="amount-bill">
@@ -26,26 +25,28 @@ function Footer({itemstotal}) {
               </Container>
               <Container>
                 <Row>
-                  <Col>
+                  <Col sm={8}>
                     <p >Bill Discount:  <span>&#8377; 15</span> </p>
                   </Col>
                   <Col>
                     <p className="round-off">Round off: <span>00</span></p>
                   </Col>
+                  <hr className="footer-dotted-line"/>
                 </Row>
+               
               </Container>
-              <hr className="footer-dotted-line"/>
+            
               <Container>
                 <Row>
                     <Col sm={8}>
                     <div className="quantity-div">
-                        <p>Qty: <span>15</span></p>
+                        <p className='qty-count'>Qty: <span >{totalqty}</span></p>
                     </div>
                     </Col>
                   
                     <Col>
                     <div className="total-input">
-                        <p>Total: <span>&#8377; 1510</span> </p>
+                        <p>Total: <span>&#8377;{finaltotal}</span> </p>
                     </div>
                     </Col>
                 </Row>
