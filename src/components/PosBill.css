@@ -1,13 +1,14 @@
 .bill-right-side{
     height: 100vh;
 }
-.logo-img{
+/* 
+.qr-card-img,.logo-img{
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-   
-}
+} */
+
 .profile-header span{
     font-size: 18px;
     font-weight: 600;
@@ -17,17 +18,15 @@
     margin-top: 0%;
 }
 .bill-left-side{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     position:sticky;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
    
 }
-.items-no{
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    margin-top: -26px;
-    margin-left: -12px;
+.items-id{
     background-color: #ECECEC;
+    padding: 5px 10px;
+    border-radius: 5px
+   
 }
 .bill-footer .amount-bill p{
     margin-top: 12px;
@@ -39,22 +38,79 @@
 }
 .bill-footer{
   position: absolute;
-  width: 96%!important;
-  bottom: 10px;
+  width: 97.4%!important;
+  max-width: 100%;
+  bottom: 5px;
 }
 .bill-footer p{
+    font-size: 19px;
     color: #606161;
+    font-weight: 500;
 }
 .bill-footer p span{
     color: black;
     font-weight: 600;
 }
-.bill-right-side h6{
+
+.qr-btn{
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50%;
+    
+}
+.qr-btn button{
+    background: #343a40!important;
+    color: #fff !important;
+    font-size: 500;
+    outline: none;
+    border: #343a40!important;
+    max-width: 100%;
+    position: absolute;
+    bottom: 10%;
+   
+    
+}
+.qr-btn button:hover{
+    background:#606161!important;
+}
+.total-input p{
+    font-size: 22px;
+    color: #31aff5;
+    font-weight: 800;
+    position: absolute;
+    right: 5%;
+   
+}
+.total-input p span{
+    color: #31aff5;
+    font-weight: 600;
+}
+.qr-card-img{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 75%;
+    top: 30%;
+}
+.bill-right-side h6,.vasy-img{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    
+   
+}
+.bill-right-side h6{
+    left: 80%;
+    top: 45%;
+}
+.vasy-img{
+    left: 78%;
+    top: 50%;
 }
 .discount-input{
     width: 50px;
@@ -77,6 +133,7 @@ table{
     --bs-table-border-color: #aeb4b9!important;
 
 }
+
 table th{
     position: sticky;
     top: 0;
@@ -90,7 +147,6 @@ table th{
 
 .bill-footer{
     background-color: #ECECEC;
-    width: 100%;
 }
 
 .footer-dotted-line{
@@ -99,7 +155,7 @@ table th{
     
 }
 .add-products{
-    margin-top: 20px;
+    margin-top: 5%;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -145,6 +201,24 @@ table th{
   overflow-y: scroll;
   overflow-x: hidden;
 }
+.dropdown{
+    position: absolute!important;
+    margin-top: 50px;
+    margin-left: -100px;
+    border-radius: 2px;
+    height: 0px;
+    width: 200px;
+    transition-duration: 0.3s;
+    transition-delay: 0.4s;
+   
+}
+.dropdown-row{
+    box-shadow: 3px 3px 20px 1px #aaa;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+   padding: 10px 10px;
+}
 /* media quieries */
 
 @media only screen and (max-width: 1400px) {
@@ -154,7 +228,15 @@ table th{
         overflow-y: scroll;
     } 
     .bill-footer{
-        bottom: 24px;
+        bottom: 4px;
+    }
+    .qr-card-img{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 70%;
+        top: 30%;
     }
 }
 @media only screen and(max-width:1000px){
