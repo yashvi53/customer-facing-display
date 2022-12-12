@@ -10,6 +10,7 @@ function App() {
   const [username,setUsername] = useState("");
   const [room,setRoom]=useState("");
   const [showChat,setShowChat]=useState(false);
+ 
 
   const joinRoom = () => {
     if (username !== "" && room !== "") {
@@ -17,6 +18,7 @@ function App() {
       setShowChat(true);
     }
   };
+  
   return (
     <div className="App">
       {!showChat ? (
@@ -33,7 +35,7 @@ function App() {
      ) : (
       <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={< PosBill socket={socket}  username={username} room={room} />}/>
+        <Route exact path="/" element={< PosBill socket={socket}   username={username} room={room} />}/>
         <Route exact path="/cfd" element={<ClientSideBill socket={socket}  username={username} room={room} />}/>
       </Routes>
       </BrowserRouter>

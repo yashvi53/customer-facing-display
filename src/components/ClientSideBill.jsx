@@ -4,17 +4,18 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Table } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Typeahead } from "react-bootstrap-typeahead";
 import Header from "./Header";
 import Footer from "./Footer";
+
 
 function ClientSideBill({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [product, setProduct] = useState([]);
   const [value, setValue] = useState("");
+
+ 
 
   const fetchData = () => {
     return fetch("https://fakestoreapi.com/products")
@@ -99,10 +100,11 @@ function ClientSideBill({ socket, username, room }) {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log(data);
-      setMessageList(data.filterdArrayFroomMessageList);
+      console.log("yashvi"+data);
+     setMessageList(data.filterdArrayFroomMessageList);
     });
   }, [socket]);
+
 
   return (
     <Container fluid>
@@ -143,7 +145,7 @@ function ClientSideBill({ socket, username, room }) {
               finaltotal={finaltotal}
             />
         </Col>
-        
+      
         <Col className="bill-right-side" xs={6} md={4}>
 
           {/* <h6>Powered By</h6>
@@ -154,9 +156,10 @@ function ClientSideBill({ socket, username, room }) {
           <div className="qr-card-img">
           <Card style={{ width: "18rem" }}>
           <Card.Body>
-              <Card.Title>Scan Here To Pay</Card.Title>
-            <Card.Img variant="top" src="images/qr-code.png" />
+           <Card.Title>Scan Here To Pay</Card.Title>
+                {messageList.show && <Card.Img variant="top"  src="images/qr-code.png"  alt="qrcode" />}
             </Card.Body>
+            
           </Card>
           </div> 
           

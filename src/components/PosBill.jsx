@@ -9,12 +9,12 @@ import Header from "./Header";
 
 import Footer from "./Footer";
 
-function PosBill({ socket, username, room }) {
+function PosBill({ socket, username, room}) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [product, setProduct] = useState([]);
   const [value, setValue] = useState("");
-  const [isShown, setIsShown] = useState(false);
+ const [show,setShow]=useState(false);
 
 
   const fetchData = () => {
@@ -57,15 +57,18 @@ function PosBill({ socket, username, room }) {
       //   filteredObj={...filteredObj,qty:1}
       // }
     });
- 
+   
+
 
     let filterdArrayFroomMessageList = messageList.filter((item) => {
       return item.id !== filteredObj.id;
     });
     filterdArrayFroomMessageList.push(filteredObj);
-    
+
+   
     setMessageList(filterdArrayFroomMessageList);
     console.log("send_data new", filterdArrayFroomMessageList);
+  
     socket.emit("send_data", { filterdArrayFroomMessageList, room });
     console.log("messagelist on send data", messageList);
     console.log("tabledata working");
@@ -101,6 +104,7 @@ function PosBill({ socket, username, room }) {
  document.querySelector('input').defaultValue = '';
 
   }
+ 
   
   useEffect(() => {
     socket.on("receive_message", (data) => {
@@ -195,6 +199,8 @@ function PosBill({ socket, username, room }) {
                 sendData();
                 onSearch(value);
                 handleSubmit();
+               
+
               }}
             >
               Add Products
@@ -208,7 +214,9 @@ function PosBill({ socket, username, room }) {
           </div>
           <div className="qr-btn">
             <Button variant="secondary"
-            
+            onClick={()=>{
+             setShow(true);
+            }}
             >Generate QrCode</Button>
           </div>      
         </Col>
