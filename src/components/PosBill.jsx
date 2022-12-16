@@ -77,9 +77,10 @@ function PosBill({ socket, username, room}) {
       image = "images/logo-new.png";
 
     }else{
-      productArray=[];
+      productArray=messageList;
       showQr = true;
       image = {qrcode};
+      console.log("qrimage",image);
     }
    
    
