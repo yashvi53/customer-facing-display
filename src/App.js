@@ -4,12 +4,15 @@ import io from "socket.io-client";
 import "./App.css"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import ClientSideBill from './components/ClientSideBill';
-const socket=io.connect("http://216.48.180.161:3002");
+const socket=io.connect("http://localhost:3002");
+
 // https://cfd-vasyerp.netlify.app:3002
+//http://216.48.180.161:3002
 function App() {
   const [username,setUsername] = useState("");
   const [room,setRoom]=useState("");
   const [showChat,setShowChat]=useState(false);
+  // const [show, setShow] = useState(false)
  
 
   const joinRoom = () => {
@@ -35,7 +38,7 @@ function App() {
      ) : (
       <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={< PosBill socket={socket}   username={username} room={room} />}/>
+        <Route exact path="/" element={< PosBill socket={socket}    username={username} room={room} />}/>
         <Route exact path="/cfd" element={<ClientSideBill socket={socket}  username={username} room={room} />}/>
       </Routes>
       </BrowserRouter>

@@ -4,10 +4,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
-import { Table } from "react-bootstrap";
+import { Table,Card } from "react-bootstrap";
+import { qrcode } from "../utils/Constant";
 import Header from "./Header";
-
 import Footer from "./Footer";
+
 
 function PosBill({ socket, username, room}) {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -17,8 +18,8 @@ function PosBill({ socket, username, room}) {
  const [show,setShow]=useState(false);
 
 
-  const fetchData = () => {
-    return fetch("https://fakestoreapi.com/products")
+  const  fetchData = async() => {
+    return await fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
@@ -30,50 +31,72 @@ function PosBill({ socket, username, room}) {
     fetchData();
   }, []);
 
-  const sendData = () => {
+  const sendData = (type) => {
     console.log("working");
     // fetchData();
     console.log("products: " + product);
     console.log("currentMessage :: " + currentMessage);
 
-    const filterdArray = product.filter((item) => {
-      return item.title === value;
-    });
-
-    console.log("filterarray" + filterdArray);
-    let filteredObj = null;
-
-    if (filterdArray.length > 0) {
-      filteredObj = filterdArray[0];
-      filteredObj = { ...filteredObj, qty: 1 };
-      console.log("filterobj", filteredObj);
-    }
-
-    messageList.forEach((item) => {
-      if (item.id === filteredObj.id) {
-        filteredObj = { ...filteredObj, qty: item.qty + 1 };
-      }
-      // else{
-      //   filteredObj={...filteredObj,qty:1}
-      // }
-    });
-   
-
-
-    let filterdArrayFroomMessageList = messageList.filter((item) => {
-      return item.id !== filteredObj.id;
-    });
-    filterdArrayFroomMessageList.push(filteredObj);
-
-   
-    setMessageList(filterdArrayFroomMessageList);
-    console.log("send_data new", filterdArrayFroomMessageList);
+    let showQr = false;
+    let image = "images/logo-new.png";
+    let productArray = [];
+    if (type == 'product') {
+      const filterdArray = product.filter((item) => {
+        return item.title === value;
+      });
   
-    socket.emit("send_data", { filterdArrayFroomMessageList, room });
+      console.log("filterarray" + filterdArray);
+      let filteredObj = null;
+  
+      if (filterdArray.length > 0) {
+        filteredObj = filterdArray[0];
+        filteredObj = { ...filteredObj, qty: 1 };
+        console.log("filterobj", filteredObj);
+      }
+      
+  
+      messageList.forEach((item) => {
+        if (item.id === filteredObj.id) {
+          filteredObj = { ...filteredObj, qty: item.qty + 1 };
+        }
+      
+      });
+     
+
+      let filterdArrayFroomMessageList = messageList.filter((item) => {
+        return item.id !== filteredObj.id;
+      });
+      filterdArrayFroomMessageList.push(filteredObj);
+
+      setMessageList(filterdArrayFroomMessageList);
+      console.log("send_data new", filterdArrayFroomMessageList);
+
+
+      productArray = filterdArrayFroomMessageList;
+      showQr = false;
+      image = "images/logo-new.png";
+
+    }else{
+      productArray=[];
+      showQr = true;
+      image = {qrcode};
+    }
+   
+   
+    let obj={
+      
+      "filterdArrayFroomMessageList":(productArray) ,
+      "show":showQr,
+      img:image
+      
+    }
+    console.log("yashvi image",obj.img);
+    socket.emit("send_data", {obj, room });
     console.log("messagelist on send data", messageList);
     console.log("tabledata working");
    
   };
+
 
   let itemstotal = 0;
   messageList.forEach((item) => {
@@ -106,12 +129,20 @@ function PosBill({ socket, username, room}) {
   }
  
   
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      console.log(data);
-      setMessageList(data.filterdArrayFroomMessageList);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("receive_message", (data) => {
+  //     console.log("vvvvvvv",data.filterdArrayFroomMessageList)
+  //     setMessageList(data.obj.filterdArrayFroomMessageList);
+     
+  //   });
+  //       //   socket.on('receive_image', image => {
+  //       //     // create image with
+            
+  //       // setShow(image.img);
+  //       // console.log("mmm",image.img)
+  //       //     // Insert it into the DOM
+  //       // });
+  // }, [socket]);
 
   return (
     <Container fluid>
@@ -196,7 +227,8 @@ function PosBill({ socket, username, room}) {
             />
             <button
               onClick={() => {
-                sendData();
+
+                sendData('product');
                 onSearch(value);
                 handleSubmit();
                
@@ -212,10 +244,24 @@ function PosBill({ socket, username, room}) {
           <div className="vasy-img">
             <img src="images/logo-new.png" alt="logo" />
           </div>
+         
+          {/* <div className="qr-card-img">
+          <Card style={{ width: "18rem" }}>
+          <Card.Body>
+           <Card.Title>Scan Here To Pay</Card.Title>
+          
+               <Card.Img variant="top"  src="images/qr-code.png"  alt="qrcode" />
+               
+            </Card.Body>
+            
+          </Card>
+          </div>  */}
+         
           <div className="qr-btn">
             <Button variant="secondary"
             onClick={()=>{
-             setShow(true);
+              setShow(true);
+              sendData("qrcode");
             }}
             >Generate QrCode</Button>
           </div>      
