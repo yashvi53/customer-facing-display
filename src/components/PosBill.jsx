@@ -8,6 +8,7 @@ import { Table,Card } from "react-bootstrap";
 import { qrcode } from "../utils/Constant";
 import Header from "./Header";
 import Footer from "./Footer";
+import { json } from "react-router-dom";
 
 
 function PosBill({ socket, username, room}) {
@@ -24,7 +25,9 @@ function PosBill({ socket, username, room}) {
       .then((json) => {
         console.log(json);
         setProduct(json);
-      });
+        localStorage.setItem("products",JSON.stringify(json))
+      })
+      
   };
 
   useEffect(() => {
@@ -224,7 +227,7 @@ function PosBill({ socket, username, room}) {
                 setValue(event.target.value);
               }}
               value={value}
-              //onChange={(e)=>setQuery(e.target.value)}
+             
             />
             <button
               onClick={() => {
@@ -245,19 +248,7 @@ function PosBill({ socket, username, room}) {
           <div className="vasy-img">
             <img src="images/logo-new.png" alt="logo" />
           </div>
-         
-          {/* <div className="qr-card-img">
-          <Card style={{ width: "18rem" }}>
-          <Card.Body>
-           <Card.Title>Scan Here To Pay</Card.Title>
-          
-               <Card.Img variant="top"  src="images/qr-code.png"  alt="qrcode" />
-               
-            </Card.Body>
-            
-          </Card>
-          </div>  */}
-         
+        
           <div className="qr-btn">
             <Button variant="secondary"
             onClick={()=>{
