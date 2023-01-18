@@ -26,11 +26,14 @@ function ClientSideBill({ socket, username, room  }) {
       .then((json) => {
         console.log(json);
         setProduct(json);
+      
+
       });
   };
 
   useEffect(() => {
     fetchData();
+
   }, []);
 
   const sendData = () => {
@@ -116,6 +119,7 @@ function ClientSideBill({ socket, username, room  }) {
       setImgSrc(data.obj.img.qrcode);
        setShowQrCode(data.obj.show);
       console.log("IMAGEEEEE : ",imgsrc);
+      
     });
   }, [socket]);
 

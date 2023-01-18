@@ -4,31 +4,9 @@ import io from "socket.io-client";
 import "./App.css"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import ClientSideBill from './components/ClientSideBill';
-// const getSocket = () => {
-//   openDB();
-//   openDB.onsuccess = function () {
-//       let db = openDB.result;
-//       let tx = db.transaction("sockets", "readonly");
-//       let store = tx.objectStore("sockets");
-//       let socket = store.get(1);
-//       socket.onsuccess = function () {
-//           if (!socket.result) {
-//               // Show an error message or redirect to an offline page
-//               console.log("erooreereee");
-//           } else {
-//               return socket.result.socket;
-//           }
-//       }
-//   };
-// };
+
 const socket = io.connect("http://localhost:3002") 
-// const openDB = () => {
-//   const openDB = indexedDB.open("socketDB", 1);
-//   openDB.onupgradeneeded = function () {
-//       let db = openDB.result;
-//       let store = db.createObjectStore("sockets", { keyPath: "id" });
-//   }
-// }
+
 
 // https://cfd-vasyerp.netlify.app:3002
 //http://216.48.180.161:3002

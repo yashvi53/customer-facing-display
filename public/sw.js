@@ -1,10 +1,7 @@
-
-// import { openDB, deleteDB, wrap, unwrap } from 'idb';
-console.warn("the sw is in public folder");
-
-let cacheData= "poschat-cache"
+let cacheData= "poschat-cache";
 let db;
-self.addEventListener("install", (event) => {
+
+self.addEventListener("install", async (event) => {
     event.waitUntil(
       caches
         .open("poschat-cache")
@@ -22,158 +19,81 @@ self.addEventListener("install", (event) => {
                 '/'
           ])
         )
-      
     );
-// openDB('poschat-db', 1, upgradeDB => {
-//       alert(upgradeDB.version);
-//       if (!upgradeDB.objectStoreNames.contains('products')) {
-//         upgradeDB.createObjectStore('products', {keyPath: 'url'});
-//       }
-//       if (!upgradeDB.objectStoreNames.contains('cfd')) {
-//         upgradeDB.createObjectStore('cfd', {keyPath: 'url'});
-//       }
-//     }).then(connection => {
-//       db = connection;
-//     });
-    alert("working")
-  });
+    let request = indexedDB.open("poschat", 1);
+    request.onupgradeneeded = function(event) {
+      db = event.target.result;
+      let objectStore = db.createObjectStore("products", {keyPath: "id"});
+      console.log(objectStore.keyPath);
+      console.log(db.objectStoreNames.contains("products"))
+    };
+    request.onsuccess = function(event) {
+        db = event.target.result;
+    };
+    request.onerror = function(event) {
+        console.log("Error while opening DB: ", event)
+    }
+});
 
-  self.addEventListener("fetch",(event)=>{
+self.addEventListener("fetch",(event)=>{
     event.respondWith(
         caches.match(event.request).then((resp)=>{
             if(resp){
                 return resp;
             }
             let requestUrl=event.request.clone();
-            fetch(requestUrl)
+            return fetch(requestUrl)
+              .then(response => {
+                if(event.request.url.includes('https://fakestoreapi.com/products')) {
+                    return response.json().then(json => {
+                        json.products.forEach(product => {
+                            addProduct(product);
+                        });
+                        return response;
+                    });
+                } else {
+                    return response;
+                }
+              })
+              .catch(error => {
+                console.log("Error while fetching: ", error);
+              });
         })
     )
-  })
-  // import idb from 'idb';
+});
 
-  // console.warn("the sw is in public folder");
-  
-  
-  // let cacheData= "poschat-cache";
-  // let db;
-  
-  // self.addEventListener("install", (event) => {
-  //   event.waitUntil(
-  //     caches
-  //       .open("poschat-cache")
-  //       .then((cache) =>
-  //         cache.addAll([
-  //           '/static/js/bundle.js',
-  //           '/favicon.ico',
-  //           '/images/profile-img.png',
-  //           'images/logo-new.png',
-  //           'https://fakestoreapi.com/products',
-  //           '/socket.io/?EIO=4&transport=polling&t=OM60U5Z',
-  //           '/socket.io/?EIO=4&transport=polling&t=OM617Zw',
-  //            'http://localhost:3000/cfd',
-  //               '/index.html',
-  //               '/'
-  //         ])
-  //       )
-  //   );
-  //   console.log("working code ");
-  //   // open a connection to the IndexedDB
-  //   idb.open('poschat-db', 1, upgradeDB => {
-  //     upgradeDB.createObjectStore('products', {keyPath: 'url'});
-  //   upgradeDB.createObjectStore('cfd', {keyPath: 'url'});
-  //   }).then(connection => {
-  //     db = connection;
-  //     console.log("error thorugh");
-  //   });
-  // });
-  // console.log("connection sucessfully done");
-  // self.addEventListener("fetch", (event) => {
-  //   event.respondWith(
-  //     caches.match(event.request).then((response) => {
-  //       if (response) {
-  //         return response;
-  //       }
-  //       return fetch(event.request).then((networkResponse) => {
-  //         if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== "basic") {
-  //           return networkResponse;
-  //         }
-  //         const responseToCache = networkResponse.clone();
-  //         caches.open(cacheData).then((cache) => {
-  //           cache.put(event.request, responseToCache);
-  //         });
-  // console.log("workinggggggg",responseToCache);
-  //         if (event.request.url.includes("http://localhost:3000/")) {
-  //           const tx = db.transaction("products", "readwrite");
-  //           tx.objectStore("products").put(responseToCache, event.request.url);
-  //           return tx.complete.then(() => {
-  //             return networkResponse;
-        
-  //           });
-            
-  //         }
-       
-  //          else if (event.request.url.includes("http://localhost:3000/cfd")) {
-  //           const tx = db.transaction("cfd", "readwrite");
-  //           tx.objectStore("cfd").put(responseToCache, event.request.url);
-  //           return tx.complete.then(() => {
-  //             return networkResponse;
-  //           });
-  //         } else {
-  //           return networkResponse;
-  //         }
-  //       });
-  //     })
-  //   );
-  // });
-  // console.log("done",networkResponse);
-  // self.addEventListener("fetch",(event)=>{
-  //   event.respondWith(
-  //       caches.match(event.request).then((resp)=>{
-  //           if(resp){
-  //               return resp;
-  //           }
-  //           let requestUrl=event.request.clone();
-  //           return fetch(requestUrl).then((response)=>{
-  //               if(!response || response.status !== 200 || response.type !== 'basic'){
-  //                   return response;
-  //               }
-  //               let responseToCache=response.clone();
-  //               caches.open(cacheData).then((cache)=>{
-  //                   cache.put(event.request,responseToCache)
-  //               });
-  //               // store the data in the IndexedDB
-  //               const tx = db.transaction('data', 'readwrite');
-  //               tx.objectStore('data').put(responseToCache, event.request.url);
-  //               return tx.complete.then(() => {
-  //                 return response;
-  //               });
-    
-  //           });
-  //       })
-  //   )
-  // });
-  //  self.addEventListener('fetch', event => {
-  //     if (event.request.url.startsWith('https://fakestoreapi.com/products')) {
-  //       event.respondWith(
-  //         caches.match(event.request).then(response => {
-  //           if (response) {
-  //             return response;
-              
-  //           }
-           
-  //           return fetch(event.request).then(response => {
-  //             if (!response || response.status !== 200) {
-  //               return response;
-  //             }
-  //  const responseToCache = response.clone();
-  //             caches.open('cacheData').then(cache => {
-  //               cache.put(event.request, responseToCache);
-  //               console.log("working");
-  //             });
-  //             return response;
-            
-  //           });
-  //         })
-  //       );
-  //     }
-  //   });
+console.log("...........");
+function addProduct(product) {
+    console.log(product);
+    let transaction = db.transaction(["products"], "readwrite");
+    let objectStore = transaction.objectStore("products");
+    let request = objectStore.put(product);
+    request.onsuccess = function() {
+        console.log("Product has been added to the object store.");
+    };
+    request.onerror = function(event) {
+        console.log("Error while adding product: ", event);
+    }
+}
+
+// self.addEventListener("fetch", async (event) => {
+//     try {
+//         const response = await caches.match(event.request);
+//         if (response) {
+//             return event.respondWith(response);
+//         }
+//         const requestUrl = event.request.clone();
+//         const fetchResponse = await fetch(requestUrl);
+
+//         if (!fetchResponse || fetchResponse.status !== 200) {
+//             throw new Error(`Fetch response was unsuccessful: ${fetchResponse.status}`);
+//         }
+
+//         const cache = await caches.open(cacheData);
+//         event.waitUntil(cache.put(event.request, fetchResponse.clone()));
+
+//         event.respondWith(fetchResponse);
+//     } catch (error) {
+//         console.error('Error in fetch event listener:', error);
+//     }
+// });
