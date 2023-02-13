@@ -154,6 +154,13 @@ table th{
     border-bottom: 2px dashed black;
     
 }
+.connection-div{
+    text-align: center;
+    display: flex;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+}
 .add-products{
     margin-top: 5%;
     text-align: center;
@@ -210,6 +217,7 @@ table th{
     width: 200px;
     transition-duration: 0.3s;
     transition-delay: 0.4s;
+    z-index: 1;
    
 }
 .dropdown-row{
