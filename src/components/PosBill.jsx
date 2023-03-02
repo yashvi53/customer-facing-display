@@ -4,12 +4,18 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Button } from "react-bootstrap";
+<<<<<<< HEAD
 import { Table} from "react-bootstrap";
 import { qrcode } from "../utils/Constant";
 import { paylater } from "../utils/Paylater";
 import {card} from "../utils/Card";
 import {cash} from "../utils/Cash";
 import { reedem } from "../utils/Reedem";
+=======
+import { Table, Card } from "react-bootstrap";
+import { qrcode } from "../utils/Constant";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
 import Header from "./Header";
 import Footer from "./Footer";
 import Peer from "peerjs";
@@ -25,6 +31,7 @@ function PosBill({ socket, username, room, connection }) {
   const [product, setProduct] = useState([]);
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
+<<<<<<< HEAD
   const [showpl,setShowPl]=useState(false);
   const [showcard,setShowCard]=useState(false);
   const [showcash,setShowCash]=useState(false);
@@ -33,6 +40,11 @@ function PosBill({ socket, username, room, connection }) {
   console.log(room, "RoomID");
 
   //here data will be fetch from api
+=======
+  const [peerIdValue, setPeerIdValue] = useState("");
+  console.log(room, "RoomID");
+
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
   const fetchData = async () => {
     return await fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
@@ -43,12 +55,17 @@ function PosBill({ socket, username, room, connection }) {
       });
   };
 
+<<<<<<< HEAD
 
+=======
+ // const peer = new Peer();
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
  const sendData = (type) => {
   console.log("working");
   // fetchData();
   console.log("products: " + product);
   console.log("currentMessage :: " + currentMessage);
+<<<<<<< HEAD
   console.log(type,"type")
   let showQr = false;
   let showLater=false;
@@ -58,6 +75,13 @@ function PosBill({ socket, username, room, connection }) {
   let image = "images/logo-new.png";
   let productArray = [];
   if (type === "product") {
+=======
+
+  let showQr = false;
+  let image = "images/logo-new.png";
+  let productArray = [];
+  if (type == "product") {
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
     const filterdArray = product.filter((item) => {
       return item.title === value;
     });
@@ -87,6 +111,7 @@ function PosBill({ socket, username, room, connection }) {
 
     productArray = filterdArrayFroomMessageList;
     showQr = false;
+<<<<<<< HEAD
     showLater=false;
     showCardBox=false;
     showCashBox=false;
@@ -157,6 +182,23 @@ function PosBill({ socket, username, room, connection }) {
   console.log("yashvi image", obj.img);
   console.log("type",obj.type)
 //here object will be send
+=======
+    image = "images/logo-new.png";
+  } else {
+    productArray = messageList;
+    showQr = true;
+    image = { qrcode };
+    console.log("qrimage", image);
+  }
+
+  let obj = {
+    filterdArrayFroomMessageList: productArray,
+    show: showQr,
+    img: image,
+  };
+  console.log("yashvi image", obj.img);
+
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
  conn.send(obj);
 
   console.log("messagelist on send data", messageList);
@@ -188,7 +230,10 @@ function PosBill({ socket, username, room, connection }) {
     peer = new Peer(null, {
       debug: 2,
     });
+<<<<<<< HEAD
     console.log(peer)
+=======
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
 
     peer.on("open", function (id) {
       // Workaround for peer.reconnect deleting previous id
@@ -248,6 +293,7 @@ function PosBill({ socket, username, room, connection }) {
     fetchData();
     initialize();
   }, []);
+<<<<<<< HEAD
 const handleClearScreen=()=>{
   console.log("clearscreen button")
   sendData("clearScreen");
@@ -255,6 +301,11 @@ const handleClearScreen=()=>{
 }
  
 //here total will be count
+=======
+
+ 
+
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
   let itemstotal = 0;
   messageList.forEach((item) => {
     itemstotal += parseInt(item.price * item.qty);
@@ -287,6 +338,23 @@ const handleClearScreen=()=>{
     navigator.clipboard.writeText(peerIdValue);
   }
 
+<<<<<<< HEAD
+=======
+  // useEffect(() => {
+  //   socket.on("receive_message", (data) => {
+  //     console.log("vvvvvvv",data.filterdArrayFroomMessageList)
+  //     setMessageList(data.obj.filterdArrayFroomMessageList);
+
+  //   });
+  //       //   socket.on('receive_image', image => {
+  //       //     // create image with
+
+  //       // setShow(image.img);
+  //       // console.log("mmm",image.img)
+  //       //     // Insert it into the DOM
+  //       // });
+  // }, [socket]);
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
 
   return (
     <Container fluid className="p-0">
@@ -295,7 +363,12 @@ const handleClearScreen=()=>{
         {/* here left side product details will be shoow */}
         <Col className="bill-left-side " xs={12} md={8}>
           <div className="bill-profile-side">
+<<<<<<< HEAD
        
+=======
+            <Header username={username} room={peerIdValue} />
+
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
             <Table>
               <thead>
                 <tr>
@@ -341,14 +414,20 @@ const handleClearScreen=()=>{
           <button type="submit" onClick={initialize}>
             Referesh
           </button>
+<<<<<<< HEAD
           {/* this is copy button */}
+=======
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
           <button onClick={handleCopy}>copy</button>
           {/* <CopyToClipboard text={peerIdValue} onCopy={()=>set}>
 
          
         </CopyToClipboard> */}
           </div>
+<<<<<<< HEAD
           {/* here add prodcuts logis will be */}
+=======
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
           <div className="add-products">
             <div className="dropdown">
               {product
@@ -397,8 +476,13 @@ const handleClearScreen=()=>{
             </button>
           </div>
 
+<<<<<<< HEAD
           {/* <h6>Powered By</h6> */}
           {/* <div className="vasy-img">
+=======
+          <h6>Powered By</h6>
+          <div className="vasy-img">
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
             <img src="images/logo-new.png" alt="logo" />
           </div> */}
           <div className="button-grid">
@@ -448,17 +532,26 @@ const handleClearScreen=()=>{
          Paylater
             </Button>
           </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
           <div className="qr-btn">
             <Button
               variant="secondary"
               onClick={() => {
                 setShow(true);
+<<<<<<< HEAD
                 sendData("Qrcode");
+=======
+                sendData("qrcode");
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
               }}
             >
               Generate QrCode
             </Button>
           </div>
+<<<<<<< HEAD
        
           <div className="clear-btn">
             <Button
@@ -471,6 +564,8 @@ const handleClearScreen=()=>{
             </Button>
           </div>
           </div>
+=======
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
         </Col>
       </Row>
     </Container>

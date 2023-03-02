@@ -237,11 +237,15 @@ table th{
 .connection-div{
     text-align: center;
     display: flex;
+<<<<<<< HEAD
     flex-direction: column;
+=======
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
     margin-top: 5%;
     justify-content: center;
     align-items: center;
 }
+<<<<<<< HEAD
 .connection-div input{
     border-radius: 7px;
     outline: none;
@@ -259,6 +263,8 @@ table th{
     background: black;
     margin-top: 3%;
 }
+=======
+>>>>>>> 85f19087d1afb0dd50bcee0c0c0898bffaa4fedf
 .add-products{
     margin-top: 5%;
     text-align: center;
