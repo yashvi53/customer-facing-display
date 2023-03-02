@@ -1,21 +1,51 @@
+body{
+    overflow: hidden;
+   
+}
 .bill-right-side{
     height: 100vh;
+
 }
-/* 
-.qr-card-img,.logo-img{
+.bill-header{
+ 
+   background-color: #002847;
+  
+  
+}
+.profile-header {
+    margin-right: 20px;
+  }
+.connection-container{
+
+    background: #cfd3d5;
+    width: 100vw;
+    height: 100vh;
     text-align: center;
-    display: flex;
-    justify-content: center;
     align-items: center;
-} */
+    justify-content: center;
+
+}
+.connection-header{
+    margin-top: 9%;
+}
+.connection-content{
+  margin-top: 4%;
+}
+.connection-content h3{
+    font-weight: 600;
+}
+
 
 .profile-header span{
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    font-family: 'Roboto', sans-serif;
 }
 .profile-icon{
     width: 30px;
     margin-top: 0%;
+
 }
 .bill-left-side{
     position:sticky;
@@ -38,9 +68,10 @@
 }
 .bill-footer{
   position: absolute;
-  width: 97.4%!important;
+  width: 98.4%!important;
   max-width: 100%;
-  bottom: 5px;
+  bottom: 56px!important;
+  
 }
 .bill-footer p{
     font-size: 19px;
@@ -52,24 +83,72 @@
     font-weight: 600;
 }
 
-.qr-btn{
+.qr-btn,.cash-btn,.card-btn,.Reedem-btn,.Paylater-btn,.clear-btn{
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     
 }
+.button-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+    margin-top: 90%;
+  }
+
+  
 .qr-btn button{
+    background: #343a40!important;
+    color: #fff !important;
+ 
+    outline: none;
+    border: #343a40!important;
+   
+
+    
+}
+
+
+.clear-btn button{
+    background: #343a40!important;
+    color: #fff !important;
+  
+    outline: none;
+    border: #343a40!important;
+    
+}
+.cash-btn button{
+    background: #343a40!important;
+    color: #fff !important;
+   
+    border: #343a40!important
+
+}
+.card-btn button{
+    background: #343a40!important;
+    color: #fff !important;
+   
+    outline: none;
+    border: #343a40!important;
+   
+
+}
+.Reedem-btn button{
+    background: #343a40!important;
+    color: #fff !important;
+    
+    outline: none;
+    border: #343a40!important;
+    
+}
+.Paylater-btn button{
     background: #343a40!important;
     color: #fff !important;
     font-size: 500;
     outline: none;
     border: #343a40!important;
-    max-width: 100%;
-    position: absolute;
-    bottom: 10%;
    
-    
 }
 .qr-btn button:hover{
     background:#606161!important;
@@ -79,7 +158,7 @@
     color: #31aff5;
     font-weight: 800;
     position: absolute;
-    right: 5%;
+    right: 12%;
    
 }
 .total-input p span{
@@ -92,7 +171,7 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    left: 75%;
+    left: 73%;
     top: 30%;
 }
 .bill-right-side h6,.vasy-img{
@@ -147,12 +226,38 @@ table th{
 
 .bill-footer{
     background-color: #ECECEC;
+   
 }
 
 .footer-dotted-line{
     border: none;
     border-bottom: 2px dashed black;
     
+}
+.connection-div{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+}
+.connection-div input{
+    border-radius: 7px;
+    outline: none;
+    border: none;
+   width: 25%;
+   padding: 8px 0px;
+}
+.connection-div button{
+    border-radius: 6px;
+   
+    font-size: 18px;
+    color: white;
+    padding: 10px 12px;
+    border: none;
+    background: black;
+    margin-top: 3%;
 }
 .add-products{
     margin-top: 5%;
@@ -210,6 +315,7 @@ table th{
     width: 200px;
     transition-duration: 0.3s;
     transition-delay: 0.4s;
+    z-index: 1;
    
 }
 .dropdown-row{
@@ -221,7 +327,7 @@ table th{
 }
 /* media quieries */
 
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1300px) {
     .bill-table {
         max-height: 420px;
         
@@ -229,6 +335,11 @@ table th{
     } 
     .bill-footer{
         bottom: 4px;
+    }
+    .bill-footer p{
+        font-size: 16px;
+        color: #606161;
+        font-weight: 500;
     }
     .qr-card-img{
         display: flex;
@@ -238,9 +349,20 @@ table th{
         left: 70%;
         top: 30%;
     }
+    .profile-header span {
+font-size: 15px;
+    }
 }
 @media only screen and(max-width:1000px){
     .bill-table{
         max-height: 398px;
     }
+    .bill-footer p{
+        font-size: 16px;
+        
+    }
+    .profile-header span {
+        font-size: 12px;
+    }
+    
 }

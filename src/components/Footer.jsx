@@ -21,7 +21,7 @@ function Footer({itemstotal,totalqty,finaltotal}) {
                     <p>Tax: <span>&#8377;190</span></p>
                   </Col>
                   <Col>
-                    <p>Discount: <span>&#8377;100</span></p>
+                    <p>Flat-Discount: <span>&#8377;100</span></p>
                   </Col>
                  
                   <Col >
@@ -42,6 +42,9 @@ function Footer({itemstotal,totalqty,finaltotal}) {
                         <p className='qty-count'>Qty: <span >{totalqty}</span></p>
                     </div>
                     </Col>
+                    <Col >
+                    <p >Add Charges: <span>&#8377; 00</span> </p>
+                  </Col>
                     <Col >
                     <p >Bill Discount:  <span>&#8377; 15</span> </p>
                   </Col>
